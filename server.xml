@@ -1,0 +1,50 @@
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>jsp-2.3</feature>
+		<feature>appSecurity-2.0</feature>
+        <feature>localConnector-1.0</feature>
+		<feature>servlet-3.1</feature>
+        <feature>jaxws-2.2</feature>
+		<feature>adminCenter-1.0</feature>
+	 <feature>ssl-1.0</feature>
+        <feature>ejbLite-3.1</feature>
+    </featureManager>
+    
+    <!-- security for AdminCenter -->
+         <basicRegistry id="basic">
+                <user name="webspusr" password="W3bsphere"/>
+                <user name="jdetest" password="Li2erty"/>
+         </basicRegistry>
+    
+         <administrator-role>
+                <user>webspusr</user>
+                <user>jdetest</user>
+         </administrator-role>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+
+	<applicationMonitor dropinsEnabled="false" updateTrigger="mbean"/>
+	<config updateTrigger="disabled"/>
+
+	<application context-root="snoop" id="libertyDefaultApplication" location="libertyDefaultApplication.ear" name="libertyDefaultApplication" type="ear">
+	    <application-bnd>
+		     <security-role name="Testing">
+		         <user name="admin"/>
+			</security-role>
+		</application-bnd>
+	</application>
+	
+		<!-- Basic Registry -->
+	<basicRegistry id="basic" realm="WebRealm">
+		<user name="admin" password="websphere"/>
+		<group name="MyAdmins">
+			<member name="admin"/>
+		</group>
+	</basicRegistry>
+
+	<!-- <logging maxFileSize="20" maxFiles="10" traceFileName="trace.log" traceFormat="BASIC" traceSpecification="com.ibm.ws.webcontainer*=all:com.ibm.wsspi.webcontainer*=all:HTTPChannel=all:GenericBNF=all:HTTPDispatcher=all"/> -->
+
+</server>
